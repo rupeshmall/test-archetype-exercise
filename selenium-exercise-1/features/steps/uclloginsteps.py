@@ -10,7 +10,7 @@ from features.common.customcontext import CustomContext
 
 @given(u"I navigate to the UCL cubase app portal")
 def step_impl(context: CustomContext):
-    url = Get_Env_Var(context, "cubaseurl")
+    url = Get_Env_Var(context, "cubase")
     context.objloginpo.navigate_to(url)
 
 

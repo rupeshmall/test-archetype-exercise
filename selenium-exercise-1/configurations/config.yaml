@@ -1,0 +1,36 @@
+test:
+    browser_param:
+        browser: CHROME
+        width: 1280
+        height: 1024
+        headless: true
+        proximity: local
+    wait_for_element_timeout: 30000
+    googleurl: https://www.bing.com/
+    password: 
+    execution_type: LOCAL
+    password: test
+
+test_headless:
+    browser_param:
+        browser: CHROME-HEADLESS
+        width: 1280
+        height: 1024
+        headless: true
+        proximity: local
+    wait_for_element_timeout: 30000
+    googleurl: https://www.google.co.uk
+    password: 
+    execution_type: LOCAL
+    password: test
+
+prod:
+    browser_param:
+        browser: CHROME-INCOGNITO
+        width: 1280
+        height: 1024
+        headless: false
+        proximity: local
+    wait_for_element_timeout: 30000
+    googleurl: https://www.bing.com/
+    

@@ -1,0 +1,84 @@
+name: Run Behave Selenium tests - Self-hosted runner - Cloud - LambdaTest
+
+on:
+  workflow_dispatch:
+
+env:
+  LT_USERNAME: ${{ secrets.LT_USERNAME }}       # LambdaTest Username stored in GitHub Secrets
+  LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}   # LambdaTest Access Key stored in GitHub Secrets
+  USE_LAMBDATEST: "true"                        # Environment variable to indicate using LambdaTest
+  RUN_IN_ON_PREMISE: "true"                     # Environment variable to indicate running in On-Premise
+  ENVIRONMENT: "test" 
+
+jobs:
+  test:
+    runs-on: [self-hosted, cloud]  # Specify runner labels to match your self-hosted runners
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      # Install Python dependencies from requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Start LambdaTest Tunnel (if necessary)
+      - name: Start LambdaTest Tunnel
+        if: env.USE_LAMBDATEST == 'true'
+        uses: LambdaTest/LambdaTest-tunnel-action@v2
+        with:
+          user: ${{ secrets.LT_USERNAME }}
+          accessKey: ${{ secrets.LT_ACCESS_KEY }}
+          tunnelName: Test_Tunnel_Name
+
+      # Run Behave tests on LambdaTest
+      - name: Run Behave tests on LambdaTest
+        run: |
+          behave -f allure_behave.formatter:AllureFormatter -o reports/ --tags=@UI
+
+      # Upload Allure reports as artifacts
+      - name: Upload Allure Reports
+        uses: actions/upload-artifact@master
+        with:
+          name: reports
+          path: reports
+          retention-days: 30
+        
+      # Retrieve Allure history from gh-pages branch
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+      
+      # Generate Allure report
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: reports
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+
+      # Deploy report to GitHub Pages
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history

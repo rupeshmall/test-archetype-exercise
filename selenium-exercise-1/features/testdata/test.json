@@ -1,0 +1,10 @@
+{
+  "UCL": {
+    "SearchData": "UCL London University",
+    "ExpectedResult": "UCL - London's Global University"
+  },
+  "CRM": {
+    "SearchData": "Python",
+    "ExpectedResult": "UCL - London's Global University"
+  }
+}

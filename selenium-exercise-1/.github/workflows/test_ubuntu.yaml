@@ -1,0 +1,76 @@
+name: Run Behave Selenium tests - Ubuntu
+
+on:
+  workflow_dispatch:
+
+env:
+  password: ${{ secrets.MSUSERPASSWORD }}
+  USE_LAMBDATEST: "false"                        # Environment variable to indicate using LambdaTest
+  RUN_IN_ON_PREMISE: "false"  
+  ENVIRONMENT: "test_headless"  
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # - name: Install Google Chrome
+      #   run: |
+      #     chmod +x ./scripts/install_chrome.sh
+      #     ./scripts/install_chrome.sh
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Behave tests
+        run: |
+          behave -f allure_behave.formatter:AllureFormatter -o reports/ --tags=@UI
+          
+      # Upload Allure reports as artifacts
+      - name: Upload Allure Reports
+        uses: actions/upload-artifact@master
+        with:
+          name: reports
+          path: reports
+          retention-days: 30
+        
+      # Retrieve Allure history from gh-pages branch
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+      
+      # Generate Allure report
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: reports
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+
+      # Deploy report to GitHub Pages
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history

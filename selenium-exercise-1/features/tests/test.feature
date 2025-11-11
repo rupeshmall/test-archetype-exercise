@@ -17,4 +17,3 @@ Scenario Outline: Google search with testdata
 Examples: 
 | TestData |
 | UCL      |
-| CRM      |

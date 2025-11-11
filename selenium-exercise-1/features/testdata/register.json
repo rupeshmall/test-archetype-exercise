@@ -1,0 +1,8 @@
+{
+  "User1": {
+    "EmailAddress": "auto.test.user@test.com",
+    "Password": "Test@123",
+    "GivenName": "Chris",
+    "Surname": "Evans"
+  }
+}

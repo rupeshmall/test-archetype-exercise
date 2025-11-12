@@ -1,4 +1,7 @@
 {
+  "Signinpage": {
+    "H2": "Sign in with your email address"
+  },
   "User1": {
     "EmailAddress": "auto.test.user@test.com",
     "Password": "Test@123",

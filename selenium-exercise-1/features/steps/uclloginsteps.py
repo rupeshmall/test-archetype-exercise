@@ -39,4 +39,4 @@ def step_impl(context: CustomContext):
     expected_txt_h1 = TestDataReader.GetTestDataStringFromJsonFile(
         context.feature_name, "Portalpage", "H2"
     )
-    context.objregisterpo.text_check(expected_txt_h1)
+    context.objregisterpo.verify_cubasepage_heading(expected_txt_h1)

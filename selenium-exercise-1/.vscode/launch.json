@@ -8,11 +8,12 @@
       "module": "behave",
       "console": "integratedTerminal",
       "args": [
+        // "--dry-run",
         "--no-capture",
         "--no-capture-stderr",
         "${workspaceFolder}/features",
         "-t",
-        "@Login",
+        "@RegisterTestData",
         "-f",
         "pretty"
       ]

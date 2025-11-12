@@ -1,0 +1,27 @@
+{
+  "Loginpage": {
+    "Title": "Sign in to your account"
+  },
+  "Portalpage": {
+    "Title": "Access Denied",
+    "H1": "Student Admissions Portal",
+    "LoginSuccessH1": "Welcome"
+  },
+  "Signuppage": {
+    "H2": "Sign in with your email address"
+  },
+  "User1": {
+    "EmailAddress": "testuser00001@ucl.ac.uk",
+    "Password": "Test@123",
+    "ConfirmPassword": "Test@123",
+    "GivenName": "Jim",
+    "Surname": "Page"
+  },
+  "User2": {
+    "EmailAddress": "testuser002@ucl.ac.uk",
+    "Password": "Test@123",
+    "ConfirmPassword": "Test@123",
+    "GivenName": "Chris",
+    "Surname": "Evans"
+  }
+}

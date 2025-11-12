@@ -13,7 +13,7 @@ def before_all(context: CustomContext):
     context.build_name = (
         f"Python_Selenium_Archetype-{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
     )
-
+   
 
 def before_scenario(context: CustomContext, scenario):
     context.feature_name = context.feature.name

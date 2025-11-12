@@ -13,7 +13,7 @@
         "--no-capture-stderr",
         "${workspaceFolder}/features",
         "-t",
-        "@RegisterTestData",
+        "@Signin",
         "-f",
         "pretty"
       ]

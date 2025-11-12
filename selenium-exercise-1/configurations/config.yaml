@@ -7,11 +7,10 @@ test:
         proximity: local
     wait_for_element_timeout: 30000
     googleurl: https://www.bing.com/
-    cubaseurl: https://ucl-rm-cubase.powerappsportals.com/
+    portalurl: https://ucl-rm-cubase.powerappsportals.com/
     testemail: 365-0071@ucl.ac.uk
-    password: 
-    execution_type: LOCAL
     password: test
+    execution_type: LOCAL
 
 test_headless:
     browser_param:
